@@ -1,0 +1,16 @@
+﻿@using Client.Components.Navigation.Menu.ViewModel;
+
+@if(Menu.Items.Any())
+{
+    <ul class="ml-[-8px]">
+        @foreach (var item in Menu.Items)
+        {
+            <MenuLink Menu="item" />
+        }
+    </ul>
+}
+
+@code {
+    [CascadingParameter(Name = "MenuViewModel")]
+    private IMenuViewModel Menu { get; set; } = null!;
+}

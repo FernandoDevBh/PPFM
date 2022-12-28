@@ -1,0 +1,10 @@
+﻿@using Client.Components.Navigation.Menu.ViewModel;
+
+<div class="absolute bg-white text-dark-purple  w-8 h-8 cursor-pointer rounded-full -right-3 top-11 border border-dark-purple @Menu.Rotate">
+    <ArrowLeftShort @onclick="() => Menu.SetOpen()" />
+</div>
+
+@code {
+    [CascadingParameter(Name = "MenuViewModel")]
+    private IMenuViewModel Menu { get; set; } = null!;
+}

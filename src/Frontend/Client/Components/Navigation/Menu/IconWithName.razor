@@ -1,0 +1,20 @@
+﻿<div class="grow flex items-stretch gap-x-4">
+    <div class="w-8 h-8 fill-gray-300">                
+        @Icon               
+    </div>
+
+    <span class="@($"text-base font-medium {(MenuIsOpen ? string.Empty : "hidden")} durantion-200")">
+        @Title  
+    </span>
+</div>
+
+@code {
+    [Parameter]
+    public required RenderFragment Icon { get; set; }
+
+    [Parameter]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public bool MenuIsOpen { get; set; }
+}

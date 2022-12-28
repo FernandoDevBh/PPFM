@@ -1,0 +1,16 @@
+﻿@using Client.Components.Navigation.Menu.ViewModel;
+
+<div class="inline-flex">
+    <div class="@($@"w-9 h-9 bg-amber-300 rounded p-1 cursor-pointer block float-left mr-2
+                    {(Menu.IsOpen ? string.Empty : "rotate-[360deg] duration-500")}")">
+        <AiFillEnvironment />
+    </div>
+    <h1 class="@($"text-white origin-left font-medium text-2xl duration-300 {(!Menu.IsOpen ? "scale-0" : string.Empty)}")">
+        Tailwind
+    </h1>
+</div>
+
+@code {
+    [CascadingParameter(Name = "MenuViewModel")]
+    public IMenuViewModel Menu { get; set; } = null!;
+}
