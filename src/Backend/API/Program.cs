@@ -1,6 +1,7 @@
 using Persistence.Data;
 using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
+using API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
