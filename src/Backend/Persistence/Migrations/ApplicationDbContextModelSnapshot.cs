@@ -10,19 +10,22 @@ using Persistence.Data;
 
 namespace Persistence.Migrations
 {
-    [DbContext(typeof(ApplicationIdentityDbContext))]
-    partial class ApplicationIdentityDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(ApplicationDbContext))]
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.1")
+                .HasAnnotation("Proxies:ChangeTracking", false)
+                .HasAnnotation("Proxies:CheckEquality", false)
+                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationRole", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +52,7 @@ namespace Persistence.Migrations
                     b.ToTable("fm_roles", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationRoleClaim", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationRoleClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -73,7 +76,7 @@ namespace Persistence.Migrations
                     b.ToTable("fm_roles_claims", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUser", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUser", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,6 +88,11 @@ namespace Persistence.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<string>("DisplayName")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("display_name");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -138,7 +146,7 @@ namespace Persistence.Migrations
                     b.ToTable("fm_users", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserClaim", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserClaim", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -162,7 +170,7 @@ namespace Persistence.Migrations
                     b.ToTable("fm_users_claims", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserLogin", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserLogin", b =>
                 {
                     b.Property<string>("LoginProvider")
                         .HasColumnType("text");
@@ -183,7 +191,7 @@ namespace Persistence.Migrations
                     b.ToTable("fm_users_logins", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserRole", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserRole", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -198,7 +206,7 @@ namespace Persistence.Migrations
                     b.ToTable("fm_users_roles", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserToken", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserToken", b =>
                 {
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
@@ -217,51 +225,51 @@ namespace Persistence.Migrations
                     b.ToTable("fm_users_tokens", (string)null);
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationRoleClaim", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationRoleClaim", b =>
                 {
-                    b.HasOne("PPFM.DataAccess.Identity.ApplicationRole", null)
+                    b.HasOne("Domain.Identity.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserClaim", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserClaim", b =>
                 {
-                    b.HasOne("PPFM.DataAccess.Identity.ApplicationUser", null)
+                    b.HasOne("Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserLogin", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserLogin", b =>
                 {
-                    b.HasOne("PPFM.DataAccess.Identity.ApplicationUser", null)
+                    b.HasOne("Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserRole", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserRole", b =>
                 {
-                    b.HasOne("PPFM.DataAccess.Identity.ApplicationRole", null)
+                    b.HasOne("Domain.Identity.ApplicationRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PPFM.DataAccess.Identity.ApplicationUser", null)
+                    b.HasOne("Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PPFM.DataAccess.Identity.ApplicationUserToken", b =>
+            modelBuilder.Entity("Domain.Identity.ApplicationUserToken", b =>
                 {
-                    b.HasOne("PPFM.DataAccess.Identity.ApplicationUser", null)
+                    b.HasOne("Domain.Identity.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,0 +1,8 @@
+﻿using Domain.Identity;
+
+namespace Application.Interfaces;
+
+public interface IJwtGenerator
+{
+    string CreateToken(ApplicationUser user);
+}

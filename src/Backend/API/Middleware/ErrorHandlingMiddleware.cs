@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text.Json;
 using Application.Errors;
+using ValidationException = Application.Errors.ValidationException;
 
 namespace API.Middleware;
 
@@ -37,6 +38,16 @@ public class ErrorHandlingMiddleware
                 logger.LogError(exception, ErrorTypes.REST_ERROR);
                 errors = re.Erros;
                 context.Response.StatusCode = (int)re.Code;
+                break;
+            case ValidationException ve:
+                logger.LogError(exception, ErrorTypes.VALIDATION_ERRORS);
+                errors = new
+                {
+                    ve.Title,
+                    ve.Message,
+                    ve.ErrorsDictionary
+                };
+                context.Response.StatusCode = (int)StatusCodes.Status422UnprocessableEntity;
                 break;
             case Exception e:
                 logger.LogError(exception, ErrorTypes.SERVER_ERROR);

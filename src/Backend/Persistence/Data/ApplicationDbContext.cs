@@ -4,22 +4,27 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Persistence.Data;
 
-public class ApplicationIdentityDbContext : IdentityDbContext<ApplicationUser,
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser,
                                                               ApplicationRole,
                                                               Guid,
                                                               ApplicationUserClaim,
                                                               ApplicationUserRole,
                                                               ApplicationUserLogin,
-                                                              ApplicationRoleClaim,                                                                                                                                                                                          
+                                                              ApplicationRoleClaim,
                                                               ApplicationUserToken
                                                               >
 {
-    public ApplicationIdentityDbContext(DbContextOptions<ApplicationIdentityDbContext> options) : base(options) { }
-    
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
-        base.OnModelCreating(builder);        
+        base.OnModelCreating(builder);
+        builder.Entity<ApplicationUser>(u => 
+            u.Property(p => p.DisplayName)
+             .HasMaxLength(256)
+             .IsRequired(false)
+             .HasColumnName("display_name"));
 
         builder.Entity<ApplicationUser>(u => u.ToTable("fm_users"));
         builder.Entity<ApplicationRole>(u => u.ToTable("fm_roles"));
