@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Constants\Constants.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
   </ItemGroup>
 

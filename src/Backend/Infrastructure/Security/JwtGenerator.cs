@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Constants;
+using System.Text;
 using Domain.Identity;
 using Application.Interfaces;
 using System.Security.Claims;
@@ -14,7 +15,7 @@ internal class JwtGenerator : IJwtGenerator
 
     public JwtGenerator(IConfiguration config)
     {
-        this.key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"] ?? string.Empty));
+        this.key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config[Api.TOKEN_KEY] ?? string.Empty));
     }
 
     public string CreateToken(ApplicationUser user)
