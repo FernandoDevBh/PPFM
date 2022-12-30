@@ -1,6 +1,4 @@
-﻿using Client.Icons;
-using Microsoft.AspNetCore.Components;
-using Client.Components.Navigation.Menu.Models;
+﻿using Client.Components.Navigation.Menu.Models;
 using Client.Components.Navigation.Menu.Services;
 
 namespace Client.Services;
@@ -11,39 +9,29 @@ public class MenuService : IMenuService
     {
         return new List<MenuItem>
         {
-            CreateMenuItem<DashboardFill>("Dashboard"),
-            CreateMenuItem<AiOutlineFileText>("Pages"),
-            CreateMenuItem<FileImageFill>("Media"),
-            CreateMenuItem<LayoutTextSidebarReverse>("Projects", new()
+            CreateMenuItem("Dashboard", "DashboardFill"),
+            CreateMenuItem("Pages", "AiOutlineFileText"),
+            CreateMenuItem("Media", "FileImageFill"),
+            CreateMenuItem("Projects", "LayoutTextSidebarReverse",new()
             {
                 CreateMenuItem("Submenu 1"),
                 CreateMenuItem("Submenu 2"),
                 CreateMenuItem("Submenu 3"),
             }),
-            CreateMenuItem<AiOutLineBarChart>("Analytics"),
-            CreateMenuItem<AiOutlineMail>("Inbox"),
-            CreateMenuItem<BsPerson>("Profile"),
-            CreateMenuItem<AiOutlineSetting>("Settings"),
-            CreateMenuItem<AiOutlineLogout>("Logout"),
+            CreateMenuItem("Analytics", "AiOutLineBarChart"),
+            CreateMenuItem("Inbox", "AiOutlineMail"),
+            CreateMenuItem("Profile", "BsPerson"),
+            CreateMenuItem("Settings", "AiOutlineSetting"),
+            CreateMenuItem("Logout", "AiOutlineLogout"),
         };
     }
 
-    private MenuItem CreateMenuItem(string title) =>
-        new() { Title = title };
-        
-    
-    private MenuItem CreateMenuItem<TComponent>(string title, List<MenuItem>? items = null) where TComponent : IComponent
-    {
-        return new()
+    private MenuItem CreateMenuItem(string title, string? icon = null, List<MenuItem>? items = null) =>
+        new()
         {
             Title = title,
-            Icon = (builder) =>
-            {
-                builder.OpenComponent(0, typeof(TComponent));
-                builder.CloseComponent();
-            },
-            SubMenu = items != null && items.Any(),
-            SubMenuItems = items != null ? items : new()
-        };
-    }
+            Icon = string.IsNullOrEmpty(icon) ? string.Empty : $"Client.Icons.{icon}, Client.Icons",
+            SubMenuItems = items ?? new List<MenuItem>(),
+            SubMenu = (items != null && items.Any())
+        };           
 }
