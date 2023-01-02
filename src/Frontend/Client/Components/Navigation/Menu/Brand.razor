@@ -1,13 +1,14 @@
 ﻿@using Client.Components.Navigation.Menu.ViewModel;
 
-<div class="inline-flex">
-    <div class="@($@"w-9 h-9 bg-amber-300 rounded p-1 cursor-pointer block float-left mr-2
-                    {(Menu.IsOpen ? string.Empty : "rotate-[360deg] duration-500")}")">
-        <AiFillEnvironment />
+<div class="flex">    
+    <div class="@($@"flex-none bg-amber-300 rounded p-1 cursor-pointer block ml-[-5px]")">
+        <div class="@($"w-9 h-9 {(Menu.IsOpen ? string.Empty : "rotate-[360deg] duration-500")}")">
+            <BarChartSquare />
+        </div>
     </div>
-    <h1 class="@($"text-white origin-left font-medium text-2xl duration-300 {(!Menu.IsOpen ? "scale-0" : string.Empty)}")">
-        Tailwind
-    </h1>
+    <p class="@($"ml-2 grow truncate text-white origin-left font-medium duration-300 {(!Menu.IsOpen ? "text-xs scale-0" : "text-2xl")}")">
+        Finanças Pessoais
+    </p>
 </div>
 
 @code {
